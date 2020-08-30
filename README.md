@@ -52,4 +52,19 @@ Este es un ejemplo, la idea es que lo puedan arrancar.
 
 ``` api.add_resource(UserResource, '/api/booking/users', endpoint='users_resource') ```
 
+Como pueden ver en el codigo, ahí se define la URL de la API la idea es que quede ```/api/booking/<nombre_tabla>```
+
+## ¿Qué hace falta?
+
+1. Agregar envio de variables por la URL con el metodo ```GET```
+2. Agregar BluePrint de autenticacion
+3. Habilitar CORS, ya que nuestra API se va alojar en una instacia de App Engine diferente a donde va a estar la del Front End
+4. Determinar si usamos tokens o con la implementacion de autenticacion de Flask es suficiente.
+5. Cada recurso debe tener los siguientes metodos:
+    * ```GET```: Para traer datos al front
+    * ```POST```: Para enviar datos desde el front
+    * ```PUT```: Para actualizar datos desde el front
+
+
+
 
