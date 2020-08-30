@@ -22,7 +22,7 @@ class UserResource(Resource):
     """    
     def get(self):
         user = User(1,
-                    'Julian',
+                    'Andres',
                     'Santos', 
                     'ingjuliansantos@gmail.com',
                     '123*',
