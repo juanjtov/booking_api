@@ -7,6 +7,7 @@ from flask_restful import Api, Resource
 
 from ..models import User
 from app.common.error_handling import ObjectNotFound
+from app.db import set_user
 
 booking_app = Blueprint('booking_app', __name__)
 
@@ -28,10 +29,11 @@ class UserResource(Resource):
                     '+573013787020',
                     'Carrera tal con calle x',
                     'img',
-                    '1',
-                    'user',
-                    'loc',
+                    1125,
+                    1,
+                    0,0,
                     '','',True)
+
         s = jsonify(user.__dict__)
 
         return s
@@ -43,6 +45,8 @@ class UserResource(Resource):
         user = User(**data_dict)
         
         print('\nUser: ', user.name)
+        
+        e = set_user(user)
 
         return {'msg': 'User added'}
 
@@ -58,8 +62,6 @@ class RoomTypeResource(Resource):
 
     def post(self):
         pass
-
-
 
 
 api.add_resource(UserResource, '/api/booking/users', endpoint='users_resource')

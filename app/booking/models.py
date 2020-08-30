@@ -10,7 +10,8 @@ class User():
     profile_image,
     city_id,
     account_type_id,
-    location,
+    lat_location,
+    long_location,
     created_at,
     updated_at,
     active):
@@ -24,7 +25,8 @@ class User():
         self.profile_image = profile_image
         self.city_id = city_id
         self.account_type_id = account_type_id
-        self.location = location
+        self.lat_location = lat_location
+        self.long_location = long_location
         self.created_at = created_at
         self.updated_at = updated_at
         self.active = active
