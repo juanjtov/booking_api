@@ -47,6 +47,12 @@ class UserResource(Resource):
         return {'msg': 'User added'}
 
 class RoomTypeResource(Resource):
+    """ API RoomTypeResource
+
+    Methods:
+        get: HTTP Method
+        post: HTTP Methods
+    """  
     def get(self):
         pass
 
