@@ -8,7 +8,7 @@ La estrategia es crear un recurso de la API por cada tabla, de esa manera nuestr
 
 ```$ pip install -r requirements.txt ```
 
-2. En el archivo del ambiente virtual ```venv/bin/activate``` agregar las siguientes lineas de código:
+2. En el archivo del ambiente virtual ```venv/bin/activate``` agregar las siguientes lineas de código al fina del archivo:
 
 ```
 export FLASK_APP="entrypoint:app"
@@ -17,11 +17,11 @@ export APP_SETTINGS_MODULE="config.default"
 ```
 3. Arrancar el servidor ejecutando:
 
-```$ flask run``
+```$ flask run```
 
 En este punto ya deben poder ejecutar la API.
 
-4. Relizar una peticion ```GET``` a la URL: 
+4. Relizar una peticion ```GET``` a la URL: ```http://localhost:5000/api/booking/users```
  y deben obtener la siguiente respuesta:
 
  ``` json
