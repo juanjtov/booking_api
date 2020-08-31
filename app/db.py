@@ -2,9 +2,9 @@ import pymysql.cursors
 from app.booking.models import User
 
 # Connect to the database
-host='localhost'
+host='35.196.253.142'
 db_user='root'
-password='1234'
+password='x6iBKeMeDPyOuj9k'
 db='booking_project'
 charset='utf8'
 cursorclass=pymysql.cursors.DictCursor
