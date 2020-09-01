@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 
 from app.common.error_handling import ObjectNotFound, AppErrorBaseClass
 
@@ -9,6 +11,9 @@ from app.booking.api.resources import booking_app
 def create_app(settings_module):
     app = Flask(__name__)
     app.config.from_object(settings_module)
+
+    bcrypt = Bcrypt(app)
+    jwt = JWTManager(app)
 
     # Captura todos los errores 404
     Api(app, catch_all_404s=True)

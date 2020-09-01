@@ -44,7 +44,7 @@ def set_user(user):
                 "{user.password}",\
                 {user.phone_number},\
                 "{user.address}",\
-                "{user.profile_image}",\
+                "{user.profile_image_url}",\
                 {user.city_id},\
                 {user.account_type_id},\
                 {user.lat_location},\
@@ -64,6 +64,47 @@ def set_user(user):
     finally:
         connection.close()
         return e
+
+def get_user(email):
+    """
+    param: username
+    returns User instance with user data, the MySQL error handle by the try-except senteces
+    """
+    result = {}
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT `id`,`name`, \
+                            `last_name`, \
+                            `email`, \
+                            `password`, \
+                            `phone_number`, \
+                            `address`, \
+                            `profile_image_url`, \
+                            `city_id`, \
+                            `account_type_id`, \
+                            `lat_location`, \
+                            `long_location`, \
+                            `created_at`, \
+                            `updated_at`, \
+                            `active` FROM users WHERE users.email='{email}'"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
 
 def get_user_for_login(email):
     """
@@ -91,3 +132,5 @@ def get_user_for_login(email):
     finally:
         connection.close()
         return  result,e
+
+    

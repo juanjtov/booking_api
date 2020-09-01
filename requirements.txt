@@ -1,3 +1,4 @@
 flask_restful
 PyMySQL
 flask-bcrypt
+flask-jwt-extended

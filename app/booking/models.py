@@ -12,7 +12,6 @@ class UserLogin():
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
 class User(UserLogin):
     def __init__(self, 
     id, 
@@ -22,7 +21,7 @@ class User(UserLogin):
     password, 
     phone_number, 
     address,
-    profile_image,
+    profile_image_url,
     city_id,
     account_type_id,
     lat_location,
@@ -35,7 +34,7 @@ class User(UserLogin):
         self.last_name = last_name
         self.phone_number = phone_number
         self.address = address
-        self.profile_image = profile_image
+        self.profile_image_url = profile_image_url
         self.city_id = city_id
         self.account_type_id = account_type_id
         self.lat_location = lat_location
