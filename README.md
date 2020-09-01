@@ -45,6 +45,8 @@ En este punto ya deben poder ejecutar la API.
  ```
 Este es un ejemplo, la idea es que lo puedan arrancar.
 
+5. En la ruta" ```http://localhost:5000/api/auth/signup``` pueden agregar un usuario a la base de datos.
+
 ## ¿Como implementar un recurso de la API?
 
 * Se debe implementar una clase por cada tabla en el archivo `models.py`
@@ -57,7 +59,7 @@ Como pueden ver en el codigo, ahí se define la URL de la API la idea es que que
 ## ¿Qué hace falta?
 
 1. Agregar envio de variables por la URL con el metodo ```GET```
-2. Agregar BluePrint de autenticacion
+2. Agregar BluePrint de autenticacion (*Julian está trabajando en esto*)
 3. Habilitar CORS, ya que nuestra API se va alojar en una instacia de App Engine diferente a donde va a estar la del Front End
 4. Determinar si usamos tokens o con la implementacion de autenticacion de Flask es suficiente.
 5. Cada recurso debe tener los siguientes metodos:

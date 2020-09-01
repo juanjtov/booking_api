@@ -29,7 +29,7 @@ def set_user(user):
             sql = "INSERT INTO `users` (`name`, \
                                         `last_name`, \
                                         `email`, \
-                                        `user_password`, \
+                                        `password`, \
                                         `phone_number`, \
                                         `address`, \
                                         `profile_image_url`, \
@@ -64,3 +64,30 @@ def set_user(user):
     finally:
         connection.close()
         return e
+
+def get_user_for_login(email):
+    """
+    param: username
+    returns User instance with user data, the MySQL error handle by the try-except senteces
+    """
+    result = {}
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT email, password, COUNT(email) AS row_count FROM users WHERE users.email='{email}'"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e

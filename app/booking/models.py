@@ -1,5 +1,19 @@
+from flask_bcrypt import generate_password_hash, check_password_hash
 
-class User():
+
+class UserLogin():
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+    def hash_password(self):
+        self.password = generate_password_hash(self.password).decode('utf8')
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+
+class User(UserLogin):
     def __init__(self, 
     id, 
     name, 
@@ -19,8 +33,6 @@ class User():
         self.id = id
         self.name = name
         self.last_name = last_name
-        self.email = email
-        self.password = password
         self.phone_number = phone_number
         self.address = address
         self.profile_image = profile_image
@@ -31,6 +43,7 @@ class User():
         self.created_at = created_at
         self.updated_at = updated_at
         self.active = active
+        super().__init__(email, password)
 
 class RoomType():
     def __init__(self, 
