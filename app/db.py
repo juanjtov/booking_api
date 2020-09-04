@@ -2,12 +2,14 @@ import pymysql.cursors
 from app.booking.models import User
 
 # Connect to the database
-host='35.196.253.142'
-db_user='root'
-password='x6iBKeMeDPyOuj9k'
-db='booking_project'
+
+host='remotemysql.com'
+db_user='99eiAjcjXR'
+password='qxoChOlVS2'
+db='99eiAjcjXR'
 charset='utf8'
 cursorclass=pymysql.cursors.DictCursor
+
 
 def set_user(user):
     """

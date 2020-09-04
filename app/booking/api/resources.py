@@ -35,7 +35,7 @@ class UserResource(Resource):
         user = User(1,
                     'Andres',
                     'Santos', 
-                    'ingjuliansantos@gmail.com',
+                    'asdasd@gmail.com',
                     '123*',
                     '+573013787020',
                     'Carrera tal con calle x',
