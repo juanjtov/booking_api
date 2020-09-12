@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager
 
 from app.common.error_handling import ObjectNotFound, AppErrorBaseClass
 
-from app.booking.api.resources import booking_app
+from app.booking.api.router import booking_app
 
 
 def create_app(settings_module):
