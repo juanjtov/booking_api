@@ -3,12 +3,26 @@ from app.booking.models import User
 
 # Connect to the database
 
-host='remotemysql.com'
-db_user='99eiAjcjXR'
-password='qxoChOlVS2'
-db='99eiAjcjXR'
-charset='utf8'
-cursorclass=pymysql.cursors.DictCursor
+HOST='remotemysql.com'
+DB_USER='99eiAjcjXR'
+PASSWORD='qxoChOlVS2'
+DB='99eiAjcjXR'
+CHARSET='utf8'
+CURSORCLASS=pymysql.cursors.DictCursor
+
+
+def _connect_to_db(
+        host=HOST, port=3306,
+        db_user=DB_USER, password=PASSWORD,
+        db=DB, charset=CHARSET,
+        cursorclass=CURSORCLASS):
+    """Establish a connection to the DataBase
+    """
+    try:
+        con = pymysql.connect(host=host, user=db_user, password=password, db=db, charset=charset, cursorclass=cursorclass)
+        return con
+    except Exception as e:
+        print('Error: ', e)
 
 
 def set_user(user):
@@ -17,13 +31,8 @@ def set_user(user):
     returns the MySQL error handle by the try-except senteces
     """
 
-    
-    connection = pymysql.connect(host=host,
-                             user=db_user,
-                             password=password,
-                             db=db,
-                             charset=charset,
-                             cursorclass=pymysql.cursors.DictCursor)
+    connection = _connect_to_db()
+
     try:
         with connection.cursor() as cursor:
             e = 'none'
@@ -73,12 +82,8 @@ def get_user(email):
     returns User instance with user data, the MySQL error handle by the try-except senteces
     """
     result = {}
-    connection = pymysql.connect(host=host,
-                             user=db_user,
-                             password=password,
-                             db=db,
-                             charset=charset,
-                             cursorclass=pymysql.cursors.DictCursor)
+    connection = _connect_to_db()
+
     try:
         with connection.cursor() as cursor:
             row_count = 0
@@ -114,12 +119,8 @@ def get_user_for_login(email):
     returns User instance with user data, the MySQL error handle by the try-except senteces
     """
     result = {}
-    connection = pymysql.connect(host=host,
-                             user=db_user,
-                             password=password,
-                             db=db,
-                             charset=charset,
-                             cursorclass=pymysql.cursors.DictCursor)
+    connection = _connect_to_db()
+
     try:
         with connection.cursor() as cursor:
             row_count = 0
@@ -135,4 +136,27 @@ def get_user_for_login(email):
         connection.close()
         return  result,e
 
-    
+
+def get_hotels_by_name(name):
+    """
+    param: hotel name
+
+    returns: 
+    """
+    result = {}
+    connection = _connect_to_db()
+
+    try:
+        with connection.cursor() as cursor:
+            e = 'none'
+            sql = f"SELECT * FROM hotels WHERE `name` LIKE '%{name}%'"
+            n = cursor.execute(sql)
+            results = cursor.fetchall()
+            for result in results:
+                result['created_at'] = str(result['created_at'])
+                result['updated_at'] = str(result['updated_at'])
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return results, e
