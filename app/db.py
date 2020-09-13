@@ -53,7 +53,7 @@ def set_user(user):
                 "{user.last_name}",\
                 "{user.email}",\
                 "{user.password}",\
-                {user.phone_number},\
+                "{user.phone_number}",\
                 "{user.address}",\
                 "{user.profile_image_url}",\
                 {user.city_id},\
