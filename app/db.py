@@ -3,10 +3,10 @@ from app.booking.models import User
 
 # Connect to the database
 
-host='remotemysql.com'
-db_user='99eiAjcjXR'
-password='qxoChOlVS2'
-db='99eiAjcjXR'
+host='35.196.253.142'
+db_user='root'
+password='x6iBKeMeDPyOuj9k'
+db='booking_project'
 charset='utf8'
 cursorclass=pymysql.cursors.DictCursor
 
@@ -219,3 +219,84 @@ def update_user_password(user):
     finally:
         connection.close()
         return e   
+
+def get_countries():
+    """
+    returns 
+    """
+    result = {}
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM countries"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+def get_states():
+    """
+    returns 
+    """
+    result = {}
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM states"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+def get_cities():
+    """
+    returns 
+    """
+    result = {}
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM cities"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
