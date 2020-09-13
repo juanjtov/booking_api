@@ -182,3 +182,40 @@ def update_user(user):
     finally:
         connection.close()
         return e   
+
+def update_user_password(user):
+    """
+    param: User object
+    returns the MySQL error handle by the try-except senteces
+    """
+
+    
+    connection = pymysql.connect(host=host,
+                             user=db_user,
+                             password=password,
+                             db=db,
+                             charset=charset,
+                             cursorclass=pymysql.cursors.DictCursor)
+    try:
+        with connection.cursor() as cursor:
+            e = 'none'
+
+            print(user.email)
+            print(user.password)
+            
+            # Create a new record
+            sql = f"""UPDATE `users` SET `password` = "{user.password}" WHERE users.email = '{user.email}'"""
+            
+            cursor.execute(sql)
+
+        # connection is not autocommit by default. So you must commit to save
+        # your changes.
+        connection.commit()
+
+    except Exception as ex:        
+        print(ex.args[0])
+        print(ex.args[1])
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return e   

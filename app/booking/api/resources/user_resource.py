@@ -3,7 +3,7 @@ from flask import jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from app.booking.models import User, UserLogin
-from app.db import set_user, get_user_for_login, get_user, update_user
+from app.db import set_user, get_user_for_login, get_user, update_user, get_user_for_login, update_user_password
 
 class UserResource(Resource):
     """ API UserResource
@@ -14,6 +14,11 @@ class UserResource(Resource):
     """
     @jwt_required    
     def get(self):
+        """
+        Just for testing
+
+        param: none
+        """
         user = User(1,
                     'Andres',
                     'Santos', 
@@ -30,13 +35,14 @@ class UserResource(Resource):
         s = jsonify(user.__dict__)
 
         return s
-    
-    @jwt_required
-    def post(self):
-        return {'msg': 'postMethod'}
 
     @jwt_required  
     def put(self):
+        """
+        Updates all the attributes of a user except the password
+
+        param: none
+        """
         body = request.get_json()
         user_dict_updated = json.loads(json.dumps(body))
 
@@ -54,11 +60,30 @@ class UserResource(Resource):
 
     @jwt_required  
     def patch(self):
+        """
+        Updates only the user password
+
+        param: none
+        """
         body = request.get_json()
         user_for_log_dict_updated = json.loads(json.dumps(body))
         user_for_log_updated = UserLogin(**user_for_log_dict_updated)
         print(user_for_log_updated.email)
         print(user_for_log_updated.password)
+        user_for_log_updated.hash_password()
+
+        result = get_user_for_login(user_for_log_updated.email)[0]
+
+        if result['row_count'] == 1:
+            e = update_user_password(user_for_log_updated)
+            return {'msg': f'password of {user_for_log_updated.email} was updated'}
+            pass
+        else:
+            return {'error': 'email does not exist'}
+            pass
+
+
+
 
         
 
