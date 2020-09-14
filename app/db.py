@@ -139,9 +139,9 @@ def get_user_for_login(email):
 
 def get_hotels_by_name(name):
     """
-    param: hotel name
+    param: hotel_name
 
-    returns: 
+    returns: a list of the hotels that matched the given name
     """
     result = {}
     connection = _connect_to_db()
@@ -161,3 +161,40 @@ def get_hotels_by_name(name):
     finally:
         connection.close()
         return results
+
+
+def set_hotel(hotel):
+    """
+    param: Hotel class
+
+    returns: the hotel inserted into the database
+    """
+
+    connection = _connect_to_db()
+
+    try:
+        with connection.cursor() as cursor:
+            insert_stmt = f'INSERT INTO hotels VALUES '
+            values = f'("{hotel.hotel_id if hotel.hotel_id else ""}",\
+                        "{hotel.name}",\
+                        "{hotel.address}",\
+                        {hotel.city_id},\
+                        {hotel.user_id},\
+                        "{hotel.description}"\
+                        "{hotel.check_out_hour}",\
+                        {hotel.rooms_number},\
+                        "{hotel.html_iframe}",\
+                        "{hotel.policy}",\
+                        "{hotel.created_at if hotel.created_at else ""}",\
+                        "{hotel.updated_at if hotel.updated_at else ""}",\
+                        "{hotel.active if hotel.active else ""}")'
+            values = values.replace('""', 'NULL')
+            sql = insert_stmt + values
+            cursor.execute(sql)
+            hotel_saved = cursor.fetchone()
+
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return hotel_saved

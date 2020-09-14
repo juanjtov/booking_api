@@ -3,7 +3,7 @@ from flask import jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from app.booking.models import User, UserLogin
-from app.db import set_user, get_user_for_login, get_user, get_user_for_login
+from app.db import set_user, get_user_for_login, get_user, update_user, get_user_for_login, update_user_password
 
 class UserResource(Resource):
     """ API UserResource
