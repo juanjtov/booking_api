@@ -150,13 +150,14 @@ def get_hotels_by_name(name):
         with connection.cursor() as cursor:
             e = 'none'
             sql = f"SELECT * FROM hotels WHERE `name` LIKE '%{name}%'"
-            n = cursor.execute(sql)
+            cursor.execute(sql)
             results = cursor.fetchall()
-            for result in results:
-                result['created_at'] = str(result['created_at'])
-                result['updated_at'] = str(result['updated_at'])
+            if results:
+                for result in results:
+                    result['created_at'] = str(result['created_at'])
+                    result['updated_at'] = str(result['updated_at'])
     except Exception as ex:
         e = ex.args[0]
     finally:
         connection.close()
-        return results, e
+        return results

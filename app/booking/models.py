@@ -52,3 +52,30 @@ class RoomType():
         self.id = room_type_id
         self.room_type_desc = room_type_desc
 
+
+class Hotel():
+    def __init__(self,
+                 name,
+                 address,
+                 city_id,
+                 description,
+                 check_out_hour,
+                 rooms_number,
+                 hotel_id=None,
+                 html_iframe=None,
+                 policy=None,
+                 created_at=None,
+                 updated_at=None,
+                 active=None):
+        self.name = name
+        self.address = address
+        self.description = description
+        self.city_id = city_id
+        self.check_out_hour = check_out_hour
+        self.rooms_number = rooms_number
+        self.hotel_id = hotel_id
+        self.html_iframe = html_iframe
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
+
