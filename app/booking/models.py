@@ -58,6 +58,7 @@ class Hotel():
                  name,
                  address,
                  city_id,
+                 user_id,
                  description,
                  check_out_hour,
                  rooms_number,
@@ -71,10 +72,12 @@ class Hotel():
         self.address = address
         self.description = description
         self.city_id = city_id
+        self.user_id = user_id
         self.check_out_hour = check_out_hour
         self.rooms_number = rooms_number
         self.hotel_id = hotel_id
         self.html_iframe = html_iframe
+        self.policy = policy
         self.created_at = created_at
         self.updated_at = updated_at
         self.active = active

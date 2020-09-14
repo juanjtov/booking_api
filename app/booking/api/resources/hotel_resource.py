@@ -3,7 +3,7 @@ import json
 from flask import jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-from app.db import get_hotels_by_name, set_hotel
+from app.db import get_hotels_by_name, set_hotel, update_hotel, delete_hotel
 from app.booking.models import Hotel
 
 
@@ -21,13 +21,23 @@ class HotelResource(Resource):
     def post(self):
         body = request.get_json()
         hotel = Hotel(**body)
-        hotel_saved = set_hotel(hotel)
-        return hotel_saved, 200
+        process_msg = set_hotel(hotel)
+        return process_msg
 
     @jwt_required
     def put(self):
-        pass
+        body = request.get_json()
+        hotel = Hotel(**body)
+        process_msg = update_hotel(hotel)
+        return process_msg
 
     @jwt_required
     def delete(self):
+        body = request.get_json()
+        hotel = Hotel(**body)
+        process_msg = delete_hotel(hotel)
+        return process_msg
+
+    @jwt_required
+    def patch(self):
         pass
