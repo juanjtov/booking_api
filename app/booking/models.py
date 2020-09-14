@@ -52,3 +52,44 @@ class RoomType():
         self.id = room_type_id
         self.room_type_desc = room_type_desc
 
+class Country():
+    def __init__(self,
+    country_id, iso, name, spanish_name):
+        self.country_id = country_id
+        self.iso = iso
+        self.name = name
+        self.spanish_name = spanish_name
+
+    def serialize(self):
+        return {
+            'country_id': self.country_id, 
+            'iso': self.iso,
+            'name': self.name,
+            'spanish_name': self.spanish_name
+        }
+
+class State():
+    def __init__(self, state_id, name, country_id):
+        self.state_id = state_id
+        self.name = name
+        self.country_id = country_id
+
+    def serialize(self):
+        return {
+            'state_id': self.state_id, 
+            'name': self.name,
+            'country_id': self.country_id
+        }
+
+class City():
+    def __init__(self, city_id, name, state_id):
+        self.city_id = city_id
+        self.name = name
+        self.state_id = state_id
+
+    def serialize(self):
+        return {
+            'city_id': self.city_id, 
+            'name': self.name,
+            'state_id': self.state_id
+        }
