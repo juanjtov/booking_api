@@ -14,6 +14,7 @@ class UserResource(Resource):
     """
     @jwt_required    
     def get(self):
+
         """
         Just for testing
 
@@ -68,8 +69,6 @@ class UserResource(Resource):
         body = request.get_json()
         user_for_log_dict_updated = json.loads(json.dumps(body))
         user_for_log_updated = UserLogin(**user_for_log_dict_updated)
-        print(user_for_log_updated.email)
-        print(user_for_log_updated.password)
         user_for_log_updated.hash_password()
 
         result = get_user_for_login(user_for_log_updated.email)[0]

@@ -198,3 +198,69 @@ def set_hotel(hotel):
     finally:
         connection.close()
         return hotel_saved
+
+def get_countries():
+    """
+    returns 
+    """
+    result = {}
+    connection = _connect_to_db()
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM countries"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+def get_states():
+    """
+    returns 
+    """
+    result = {}
+    connection = _connect_to_db()
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM states"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+def get_cities():
+    """
+    returns 
+    """
+    result = {}
+    connection = _connect_to_db()
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"SELECT * FROM cities"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
