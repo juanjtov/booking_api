@@ -289,9 +289,9 @@ def update_user(user):
     param: User object
     returns the MySQL error handle by the try-except senteces
     """
-
     
     connection = _connect_to_db()
+  
     try:
         with connection.cursor() as cursor:
             e = 'none'
@@ -335,6 +335,7 @@ def update_user_password(user):
 
     
     connection = _connect_to_db()
+    
     try:
         with connection.cursor() as cursor:
             e = 'none'
@@ -366,6 +367,7 @@ def get_countries():
     """
     result = {}
     connection = _connect_to_db()
+  
     try:
         with connection.cursor() as cursor:
             row_count = 0
@@ -388,6 +390,7 @@ def get_states():
     """
     result = {}
     connection = _connect_to_db()
+
     try:
         with connection.cursor() as cursor:
             row_count = 0
@@ -410,6 +413,7 @@ def get_cities():
     """
     result = {}
     connection = _connect_to_db()
+  
     try:
         with connection.cursor() as cursor:
             row_count = 0
