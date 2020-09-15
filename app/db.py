@@ -24,7 +24,7 @@ def set_user(user):
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -80,7 +80,7 @@ def get_user(email):
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -122,7 +122,7 @@ def get_user_for_login(email):
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -151,7 +151,7 @@ def update_user(user):
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -200,7 +200,7 @@ def update_user_password(user):
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -236,7 +236,7 @@ def get_countries():
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -264,7 +264,7 @@ def get_states():
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
@@ -292,7 +292,7 @@ def get_cities():
                              password=password,
                              db=db,
                              charset=charset,
-                             unix_socket = '/cloudsql/{}'.format(db_connection_name),
+                             #unix_socket = '/cloudsql/{}'.format(db_connection_name),
                              cursorclass=pymysql.cursors.DictCursor)
     try:
         with connection.cursor() as cursor:
