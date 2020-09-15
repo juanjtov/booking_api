@@ -6,6 +6,7 @@ from flask_jwt_extended import JWTManager
 from app.common.error_handling import ObjectNotFound, AppErrorBaseClass
 
 from app.booking.api.router import booking_app
+from config.default import SECRET_KEY
 
 
 def create_app(settings_module):
@@ -26,6 +27,7 @@ def create_app(settings_module):
 
     # Registra manejadores de errores personalizados
     #register_error_handlers(app)
+    app.secret_key = SECRET_KEY
 
     return app
 
