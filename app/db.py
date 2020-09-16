@@ -360,6 +360,7 @@ def update_user_password(user):
         connection.close()
         return e
 
+# Places functions section -----------------------------------------------------
 
 def get_countries():
     """
