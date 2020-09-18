@@ -19,3 +19,4 @@ api.add_resource(SignupApi, '/api/auth/signup')
 api.add_resource(LoginApi, '/api/auth/login')
 api.add_resource(HotelResource, '/api/booking/hotels')
 api.add_resource(PlacesResource, '/api/booking/places', '/api/booking/places/<string:place_type>')
+ 
