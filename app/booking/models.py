@@ -123,3 +123,28 @@ class City():
             'name': self.name,
             'state_id': self.state_id
         }
+
+class Service():
+    def __init__(self, service_id, name, image_url, created_at, updated_at, active, hotel_id, description):
+        self.service_id = service_id
+        self.name = name
+        self.image_url = image_url
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
+        self.hotel_id = hotel_id
+        self.description = description
+
+    def serialize(self):
+        return {
+            'service_id': self.service_id, 
+            'name': self.name,
+            'image_url': self.image_url,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'active': self.active,
+            'hotel_id': self.hotel_id,
+            'description': self.description
+        }
+
+        

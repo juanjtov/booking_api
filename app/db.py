@@ -430,3 +430,70 @@ def get_cities():
     finally:
         connection.close()
         return  result,e
+
+
+# Services functions section
+
+def get_services_by_hotel(hotel_id):
+    """
+    returns 
+    """
+    result = {}
+    connection = _connect_to_db()
+  
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"""SELECT * FROM services WHERE services.hotel_id = {hotel_id}"""
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+
+def set_service(service):
+    """
+    param: Hotel class
+
+    returns: the hotel inserted into the database
+    """
+
+    connection = _connect_to_db()
+    msg = ""
+    try:
+        with connection.cursor() as cursor:
+            e = 'none'
+            insert_stmt = f"""INSERT INTO services (`name`,\
+                                               `image_url`,\
+                                               `active`,\
+                                               `hotel_id`,\
+                                               `description`) VALUES """
+            values = f"""('{service.name}',\
+                        '{service.image_url}',\
+                        {service.active},\
+                        {service.hotel_id},\
+                        '{service.description}')"""
+            sql = insert_stmt + values
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 201
+            else:
+                raise Exception('There was a problem creating your hotel!')
+
+        connection.commit()
+        msg = f'{service.name} service succesfully saved!'
+
+    except Exception as ex:
+        e = ex.args[0]
+        print(ex)
+        msg = ex.args[1]
+    finally:
+        connection.close()
+        return {'msg': msg}, e
