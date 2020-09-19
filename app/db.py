@@ -457,7 +457,6 @@ def get_services_by_hotel(hotel_id):
         connection.close()
         return  result,e
 
-
 def set_service(service):
     """
     param: Hotel class
@@ -497,3 +496,68 @@ def set_service(service):
     finally:
         connection.close()
         return {'msg': msg}, e
+
+def update_service(service):
+    """
+    param: dict object containing the hotel_id and the data to be updated
+
+    returns: status message
+    """
+    connection = _connect_to_db()
+    msg = ''
+    e = 0
+
+    try:
+        with connection.cursor() as cursor:
+            update_stmt = 'UPDATE services SET '
+            values = f'`image_url` = "{service.image_url}",\
+                       `active` = {service.active},\
+                       `description` = "{service.description}" '
+            id_spec = f'WHERE `service_id` = {service.service_id}'
+            sql = update_stmt + values + id_spec
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 200
+                msg = f'{service.name} was service succesfully updated!'
+            else:
+                e = 404
+                msg = f'service id {service.service_id} was not found or is invalid!'
+
+        connection.commit()
+    except Exception as ex:
+        print(ex)
+    finally:
+        connection.close()
+        return {'msg': msg}, e
+
+def delete_service(service_id):
+    """
+    """
+    connection = _connect_to_db()
+    msg = ''
+    e = 0
+
+    try:
+        with connection.cursor() as cursor:
+            update_stmt = 'UPDATE services SET '
+            values = f'`active` = 0 '
+            id_spec = f'WHERE `service_id` = {service_id} AND NOT `active` = 0'
+            sql = update_stmt + values + id_spec
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 200
+                msg = f'Service id {service_id} was deactivated correctly!'
+            else:
+                msg = f'Service id {service_id} was not found or is invalid!'
+                e = 404
+
+        connection.commit()
+    except Exception as ex:
+        print(ex)
+    finally:
+        connection.close()
+        if e == 200:
+            print("Entra")
+            return {'msg': msg}, e
+        else:
+            return {'msg': msg}, e

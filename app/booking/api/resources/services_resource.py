@@ -3,7 +3,7 @@ import json
 from flask import jsonify, request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-from app.db import get_services_by_hotel, set_service
+from app.db import get_services_by_hotel, set_service, update_service, delete_service
 from app.booking.models import Service
 
 
@@ -37,12 +37,15 @@ class ServicesResource(Resource):
 
     @jwt_required
     def put(self):
-        pass
+        body = request.get_json()
+        service = Service(**body)
+
+        process_msg, e = update_service(service)
+        return process_msg
 
     @jwt_required
     def delete(self):
-        pass
-
-    @jwt_required
-    def patch(self):
-        pass
+        body = request.get_json()
+        service_id = int(body.get('service_id'))
+        process_msg = delete_service(service_id)
+        return process_msg
