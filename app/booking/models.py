@@ -147,4 +147,26 @@ class Service():
             'description': self.description
         }
 
+class Review():
+    def __init__(self, review_id, content, user_id, hotel_id, created_at, updated_at, active):
+        self.review_id = review_id
+        self.content = content
+        self.user_id = user_id
+        self.hotel_id = hotel_id
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
+
+    def serialize(self):
+        return {
+            'review_id': self.review_id,
+            'content': self.content,
+            'user_id': self.user_id,
+            'hotel_id': self.hotel_id,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'active': self.active
+        }
+
+        
         
