@@ -172,7 +172,7 @@ def set_hotel(hotel):
     """
     param: Hotel class
 
-    returns: the hotel inserted into the database
+    returns: the hotel_id inserted into the database
     """
 
     connection = _connect_to_db()
@@ -200,7 +200,7 @@ def set_hotel(hotel):
             if rows == 1:
                 e = 201
             else:
-                raise Exception('There was a problem creating your hotel!')
+                raise Exception('There was a problem creating your hotel_id!')
 
         connection.commit()
         msg = f'{hotel.name} succesfully saved!'
@@ -253,7 +253,7 @@ def update_hotel(hotel):
         return {'msg': msg}, e
 
 
-def delete_hotel(hotel):
+def delete_hotel(hotel_id):
     """
     """
     connection = _connect_to_db()
@@ -264,13 +264,13 @@ def delete_hotel(hotel):
         with connection.cursor() as cursor:
             update_stmt = 'UPDATE hotels SET '
             values = f'`active` = 0 '
-            id_spec = f'WHERE `hotel_id` = {hotel.hotel_id} AND NOT `active` = 0'
+            id_spec = f'WHERE `hotel_id` = {hotel_id} AND NOT `active` = 0'
             sql = update_stmt + values + id_spec
             rows = cursor.execute(sql)
             if rows == 1:
                 e = 204
             else:
-                msg = f'Hotel id {hotel.hotel_id} not found or invalid!'
+                msg = f'Hotel id {hotel_id} not found or invalid!'
                 e = 404
 
         connection.commit()

@@ -34,8 +34,8 @@ class HotelResource(Resource):
     @jwt_required
     def delete(self):
         body = request.get_json()
-        hotel = Hotel(**body)
-        process_msg = delete_hotel(hotel)
+        hotel_id = body['hotel_id']
+        process_msg = delete_hotel(hotel_id)
         return process_msg
 
     @jwt_required
