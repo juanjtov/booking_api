@@ -572,3 +572,141 @@ def update_fields_room_type(room_type):
         connection.close()
         return result, e
 
+
+# Finish Room type resource methods
+
+
+# Start Bed Type resource methods
+
+def get_bed_type(bed_type_id):
+    """
+    """
+    connection = _connect_to_db()
+
+    try:
+        with connection.cursor() as cursor:
+            sql = f'SELECT * FROM bed_types WHERE bed_type_id={bed_type_id} AND active=1'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                result = cursor.fetchone()
+                result['created_at'] = str(result['created_at'])
+                result['updated_at'] = str(result['updated_at'])
+                e = 200
+            else:
+                result = {'msg': f'Bed type ID {bed_type_id} was not found!'}
+                e = 404
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+
+
+def set_bed_type(bed_type):
+    """
+    """
+    connection = _connect_to_db()
+
+    try:
+        with connection.cursor() as cursor:
+            sql = f'INSERT INTO bed_types(description) VALUES ("{bed_type.description}")'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 201
+                result= {'msg': f'{bed_type.description} bed type created succesfully!'}
+            else:
+                e = 404
+                result = {'msg': f'Bed type ID {bed_type.bed_type_id} was not found!'}
+
+        connection.commit()
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+
+
+def update_bed_type(bed_type):
+    """
+    """
+    connection = _connect_to_db()
+    result = {}
+
+    try:
+        with connection.cursor() as cursor:
+            sql = f'UPDATE bed_types SET description="{bed_type.description}" WHERE bed_type_id={bed_type.bed_type_id} AND active=1'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 200
+                result['msg'] = f'Bed type with id {bed_type.bed_type_id} has been updated succesfully!'
+            else:
+                e = 404
+                result['msg'] = f'Bed type ID {bed_type.bed_type_id} has no new changes or not exist!'
+
+        connection.commit()
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+
+
+def delete_bed_type(bed_type_id):
+    """
+    """
+    connection = _connect_to_db()
+    result = {}
+
+    try:
+        with connection.cursor() as cursor:
+            sql = f'UPDATE bed_types SET active=0 WHERE bed_type_id={bed_type_id} AND active=1'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 204
+                result = None
+            else:
+                e = 404
+                result['msg'] = f'Room type ID {bed_type_id} was not found!'
+
+        connection.commit()
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+
+
+def update_fields_bed_type(bed_type):
+    """
+    """
+    connection = _connect_to_db()
+    result = {}
+
+    try:
+        with connection.cursor() as cursor:
+            values = []
+            update_stmt = 'UPDATE bed_types SET '
+            for key, value in bed_type.__dict__.items():
+                if key != 'bed_type_id':
+                    if isinstance(value, int):
+                        values.append(str(key) + '=' + str(value))
+                    elif isinstance(value, str):
+                        values.append(str(key) + '="' + value +'"')
+            values = ','.join(values)
+            sql = update_stmt + values + f' WHERE bed_type_id={bed_type.bed_type_id}'
+            print('SQL', sql)
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 200
+                result = {'msg': f'Bed type ID {bed_type.bed_type_id} has been updated succesfully!'}
+            else:
+                e = 404
+                result = {'msg': f'There was not any changes or the ID is invalid!'}
+
+        connection.commit()
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+

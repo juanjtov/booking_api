@@ -129,3 +129,18 @@ class City():
             'name': self.name,
             'state_id': self.state_id
         }
+
+
+class BedType():
+    def __init__(
+            self,
+            description,
+            bed_type_id=None,
+            created_at=None,
+            updated_at=None,
+            active=1):
+        self.bed_type_id = bed_type_id
+        self.description = description
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
