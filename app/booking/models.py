@@ -1,4 +1,9 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
+from flask import request
+from werkzeug.utils import secure_filename
+#Just for a moment
+import os
+import app
 
 
 class UserLogin():
@@ -81,6 +86,34 @@ class Hotel():
         self.created_at = created_at
         self.updated_at = updated_at
         self.active = active
+
+class Files():
+
+    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+    # def allowed_file(filename):
+	#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    def import_images(self, request):
+        #Import the images for this hotel 
+        try:
+            #This method assumes that the image will be defined as 'hotel_image' within the request.files dictionary
+            #If this element is defined then the image is saved and the image file name and URL are extracted
+            if 'hotel_image' in request.files:
+                file = request.files['hotel_image']
+                filename = secure_filename(file.filename)
+                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                #url = os.path.join(app.config['IMAGE_URL'], filename)
+                self.image_filename = filename
+                #self.image_url = url
+
+            else:              
+                print('no images')
+
+        except KeyError as e:
+            raise ValidationError('Invalid Hotel: missing ' + e.args[0])
+
+        return self
 
 class Country():
     def __init__(self,
