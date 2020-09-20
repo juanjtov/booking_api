@@ -45,12 +45,18 @@ class User(UserLogin):
         super().__init__(email, password)
 
 class RoomType():
-    def __init__(self, 
-    room_type_id,
-    room_type_desc):
+    def __init__(self,
+    description,
+    room_type_id=None,
+    created_at=None,
+    updated_at=None,
+    active=1):
 
-        self.id = room_type_id
-        self.room_type_desc = room_type_desc
+        self.room_type_id = room_type_id
+        self.description = description
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
 
 
 class Hotel():
