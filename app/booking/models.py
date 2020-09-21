@@ -1,5 +1,5 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
-from flask import request
+from flask import Flask,request, jsonify, redirect
 from werkzeug.utils import secure_filename
 #Just for a moment
 import os
@@ -89,31 +89,37 @@ class Hotel():
 
 class Files():
 
-    ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+    #ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
     # def allowed_file(filename):
 	#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     def import_images(self, request):
         #Import the images for this hotel 
-        try:
+        #try:
             #This method assumes that the image will be defined as 'hotel_image' within the request.files dictionary
             #If this element is defined then the image is saved and the image file name and URL are extracted
-            if 'hotel_image' in request.files:
-                file = request.files['hotel_image']
-                filename = secure_filename(file.filename)
+        if request.files:
+            image = request.files['image']
+            print(image)
+                #filename = secure_filename(file.filename)
                 #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 #url = os.path.join(app.config['IMAGE_URL'], filename)
-                self.image_filename = filename
+                #self.image_filename = filename
                 #self.image_url = url
+            test = print('por fiin')
+            #return test
 
-            else:              
-                print('no images')
+        else:              
+            print('no images')
 
-        except KeyError as e:
-            raise ValidationError('Invalid Hotel: missing ' + e.args[0])
+        
+        return jsonify('la funcion retorna algo')
 
-        return self
+        # except KeyError as e:
+        #     raise ValidationError('Invalid Hotel: missing ' + e.args[0])
+
+        
 
 class Country():
     def __init__(self,

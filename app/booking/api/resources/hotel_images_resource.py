@@ -1,5 +1,5 @@
 
-from flask import request
+from flask import Flask, request, jsonify
 from flask_restful import Resource
 from app.booking.models import Files
 
@@ -9,7 +9,7 @@ class UploadImages(Resource):
     def post(self):
 
         new_image = Files()
-        new_image.import_images(request)
+        test = new_image.import_images(request)
 
         # post_data = request.get_json()
         # data_dict = json.loads(json.dumps(post_data))
@@ -18,8 +18,9 @@ class UploadImages(Resource):
         # user.hash_password()
         
         # e = set_user(user)
+        
 
 
-        return {'Image added'}
+        return test
 
 
