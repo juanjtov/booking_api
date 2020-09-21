@@ -430,3 +430,134 @@ def get_cities():
     finally:
         connection.close()
         return  result,e
+
+
+# Services functions section
+
+def get_services_by_hotel(hotel_id):
+    """
+    returns 
+    """
+    result = {}
+    connection = _connect_to_db()
+  
+    try:
+        with connection.cursor() as cursor:
+            row_count = 0
+            e = 'none'
+            # Read a single record
+            sql = f"""SELECT * FROM services WHERE services.hotel_id = {hotel_id}"""
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+    except Exception as ex:        
+        #print(ex.args[1]) 
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return  result,e
+
+def set_service(service):
+    """
+    param: Hotel class
+
+    returns: the hotel inserted into the database
+    """
+
+    connection = _connect_to_db()
+    msg = ""
+    try:
+        with connection.cursor() as cursor:
+            e = 'none'
+            insert_stmt = f"""INSERT INTO services (`name`,\
+                                               `image_url`,\
+                                               `active`,\
+                                               `hotel_id`,\
+                                               `description`) VALUES """
+            values = f"""('{service.name}',\
+                        '{service.image_url}',\
+                        {service.active},\
+                        {service.hotel_id},\
+                        '{service.description}')"""
+            sql = insert_stmt + values
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 201
+            else:
+                raise Exception('There was a problem creating your hotel!')
+
+        connection.commit()
+        msg = f'{service.name} service succesfully saved!'
+
+    except Exception as ex:
+        e = ex.args[0]
+        print(ex)
+        msg = ex.args[1]
+    finally:
+        connection.close()
+        return {'msg': msg}, e
+
+def update_service(service):
+    """
+    param: dict object containing the hotel_id and the data to be updated
+
+    returns: status message
+    """
+    connection = _connect_to_db()
+    msg = ''
+    e = 0
+
+    try:
+        with connection.cursor() as cursor:
+            update_stmt = 'UPDATE services SET '
+            values = f'`image_url` = "{service.image_url}",\
+                       `active` = {service.active},\
+                       `description` = "{service.description}" '
+            id_spec = f'WHERE `service_id` = {service.service_id}'
+            sql = update_stmt + values + id_spec
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 200
+                msg = f'{service.name} was service succesfully updated!'
+            else:
+                e = 404
+                msg = f'service id {service.service_id} was not found or is invalid!'
+
+        connection.commit()
+    except Exception as ex:
+        print(ex)
+    finally:
+        connection.close()
+        return {'msg': msg}, e
+
+def delete_service(service_id):
+    """
+    """
+    connection = _connect_to_db()
+    msg = ''
+    e = 0
+
+    try:
+        with connection.cursor() as cursor:
+            update_stmt = 'UPDATE services SET '
+            values = f'`active` = 0 '
+            id_spec = f'WHERE `service_id` = {service_id} AND NOT `active` = 0'
+            sql = update_stmt + values + id_spec
+            rows = cursor.execute(sql)
+            if rows == 1:
+                e = 200
+                msg = f'Service id {service_id} was deactivated correctly!'
+            else:
+                msg = f'Service id {service_id} was not found or is invalid!'
+                e = 404
+
+        connection.commit()
+    except Exception as ex:
+        print(ex)
+    finally:
+        connection.close()
+        if e == 200:
+            print("Entra")
+            return {'msg': msg}, e
+        else:
+            return {'msg': msg}, e

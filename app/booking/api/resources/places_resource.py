@@ -38,4 +38,4 @@ class PlacesResource(Resource):
 
             return  jsonify(cities=[city.serialize() for city in cities])
         else:
-            print('place type unknown')
+            return jsonify({'error': 'place type unknown'})
