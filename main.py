@@ -6,7 +6,5 @@ from app.booking.api import create_app
 settings_module = os.getenv('APP_SETTINGS_MODULE')
 app = create_app(settings_module)
 app.config['JWT_SECRET_KEY'] = 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
-    
+UPLOAD_FOLDER = "/home/manny/DEVELOPER/MY_PROJECTS/BOOKING_PLATFORM/IMAGES/UPLOADS"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

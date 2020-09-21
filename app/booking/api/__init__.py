@@ -12,6 +12,7 @@ from config.default import SECRET_KEY
 def create_app(settings_module):
     app = Flask(__name__)
     app.config.from_object(settings_module)
+    
 
     bcrypt = Bcrypt(app)
     jwt = JWTManager(app)

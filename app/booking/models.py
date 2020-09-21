@@ -3,7 +3,7 @@ from flask import Flask,request, jsonify, redirect
 from werkzeug.utils import secure_filename
 #Just for a moment
 import os
-import app
+from flask import current_app as app
 
 
 class UserLogin():
@@ -101,20 +101,21 @@ class Files():
             #If this element is defined then the image is saved and the image file name and URL are extracted
         if request.files:
             image = request.files['image']
-            print(image)
+            #print(image)
+            image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))  
                 #filename = secure_filename(file.filename)
                 #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 #url = os.path.join(app.config['IMAGE_URL'], filename)
                 #self.image_filename = filename
                 #self.image_url = url
-            test = print('por fiin')
+            
             #return test
 
         else:              
             print('no images')
 
         
-        return jsonify('la funcion retorna algo')
+        return jsonify('Your image have been saved succesfully')
 
         # except KeyError as e:
         #     raise ValidationError('Invalid Hotel: missing ' + e.args[0])
