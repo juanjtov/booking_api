@@ -1,10 +1,12 @@
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask import Flask,request, jsonify, redirect
 from werkzeug.utils import secure_filename
-#Just for a moment
+
 import os
 from flask import current_app as app
+from google.cloud import storage
 
+CLOUD_STORAGE_BUCKET = os.environ['CLOUD_STORAGE_BUCKET']
 
 class UserLogin():
     def __init__(self, email, password):
@@ -100,22 +102,29 @@ class Files():
             #This method assumes that the image will be defined as 'hotel_image' within the request.files dictionary
             #If this element is defined then the image is saved and the image file name and URL are extracted
         if request.files:
-            image = request.files['image']
-            #print(image)
-            image.save(os.path.join(app.config["UPLOAD_FOLDER"], image.filename))  
-                #filename = secure_filename(file.filename)
-                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                #url = os.path.join(app.config['IMAGE_URL'], filename)
-                #self.image_filename = filename
-                #self.image_url = url
-            
-            #return test
+            #image = request.files['image']
+            uploaded_file = request.files.get('image')
 
+             # Create a Cloud Storage client.
+            gcs = storage.Client()
+
+            # Get the bucket that the file will be uploaded to.
+            bucket = gcs.get_bucket(CLOUD_STORAGE_BUCKET)
+
+            # Create a new blob and upload the file's content.
+            blob = bucket.blob(uploaded_file.filename)
+
+            blob.upload_from_string(
+            uploaded_file.read(),
+            content_type=uploaded_file.content_type
+            )       
+
+          
         else:              
             print('no images')
 
-        
-        return jsonify('Your image have been saved succesfully')
+        # The public URL can be used to directly access the uploaded file via HTTP.
+        return blob.public_url
 
         # except KeyError as e:
         #     raise ValidationError('Invalid Hotel: missing ' + e.args[0])

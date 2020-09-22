@@ -6,3 +6,4 @@ env_variables:
   CLOUD_SQL_DATABASE_NAME: 'booking_project'
   CLOUD_SQL_CONNECTION_NAME: 'bookingapp-288110:us-east1:bookingdb'
   JWT_SECRET_KEY: 't1NP63m4wnBg6nyHYKfmc2TpCOGI4nss'
+  CLOUD_STORAGE_BUCKET: 'api-images-hotels'

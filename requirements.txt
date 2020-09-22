@@ -3,3 +3,5 @@ PyMySQL
 flask-bcrypt
 flask-jwt-extended
 flask-cors
+google-cloud-storage==1.31.0
+gunicorn==20.0.4
