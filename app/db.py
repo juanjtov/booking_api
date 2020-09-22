@@ -190,12 +190,13 @@ def set_hotel(hotel):
                         {hotel.city_id},\
                         {hotel.user_id},\
                         "{hotel.description}",\
-                        {hotel.check_out_hour},\
+                        "{hotel.check_out_hour}",\
                         {hotel.rooms_number},\
                         "{hotel.html_iframe}",\
                         "{hotel.policy}")'
             values = values.replace('""', 'NULL')
             sql = insert_stmt + values
+            print(sql)
             rows = cursor.execute(sql)
             if rows == 1:
                 e = 201
@@ -282,6 +283,9 @@ def delete_hotel(hotel_id):
             return msg, e
         else:
             return {'msg': msg}, e
+
+
+# Finish hotel section ----------------------------------------------------
 
 
 def update_user(user):
@@ -710,3 +714,82 @@ def update_fields_bed_type(bed_type):
         connection.close()
         return result, e
 
+
+# Start RoomResource functions --------------------------------------------------------------
+
+
+def set_room(room):
+    """
+    """
+    connection = _connect_to_db()
+    result = {}
+
+    try:
+        with connection.cursor() as cursor:
+            insert_fields = []
+            values = []
+            for key, value in room.__dict__.items():
+                if value:
+                    if isinstance(value, str):
+                        values.append(f'"{value}"')
+                    elif isinstance(value, int):
+                        values.append(f'{value}')
+                    insert_fields.append(f'`{key}`')
+
+            values = ','.join(values)
+            insert_fields = ','.join(insert_fields)
+            sql = f'INSERT INTO rooms({insert_fields}) VALUES ({values})'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 201
+                result['msg'] = f'Room {room.room_number} has been created succesfully!'
+            else:
+                e = 404
+                result['msg'] = f'There was an error creating your resource!'
+
+        connection.commit()
+
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return result, e
+
+
+def get_rooms(filter_fields):
+    """
+    """
+    connection = _connect_to_db()
+    results = {}
+
+    try:
+        with connection.cursor() as cursor:
+            if filter_fields['min_price'] or filter_fields['max_price']:
+                min_price = f'(r.price BETWEEN {filter_fields["min_price"]} AND {filter_fields["max_price"]})'
+            else:
+                min_price = ''
+            if filter_fields['city_id']:
+                city_id = f'(h.city_id = {filter_fields["city_id"]})'
+            else:
+                city_id = ''
+            date = f'b.date_check_out <= "{filter_fields["date_check_in"]}"'
+            if filter_fields['date_check_out']:
+                date += f' OR b.date_check_in >= "{filter_fields["date_check_out"]}"'
+            date = f' ({date} OR b.date_check_in IS NULL)'
+            sql = f'SELECT r.room_id, r.room_number, r.price, h.address, h.hotel_id, h.`name` AS hotel_name FROM rooms AS r LEFT JOIN bookings AS b ON r.room_id=b.room_id LEFT JOIN hotels AS h ON r.hotel_id=h.hotel_id WHERE {min_price} AND {city_id} AND {date}'
+            rows = cursor.execute(sql)
+            if rows > 0:
+                e = 200
+                results = cursor.fetchall()
+                for result in results:
+                    rows_2 = cursor.execute(f'SELECT picture_url FROM hotel_pictures WHERE hotel_id={result["hotel_id"]}')
+                    if rows_2 > 0:
+                        result['picture_url'] = cursor.fetchone().get('picture_url')
+            else:
+                e = 404
+                results = {'msg': 'No match found!'}
+    except Exception as ex:
+        e = ex.args[0]
+    finally:
+        connection.close()
+        return results, e

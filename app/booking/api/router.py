@@ -8,6 +8,7 @@ from .resources.room_type_resource import RoomTypeResource
 from .resources.hotel_resource import HotelResource
 from .resources.places_resource import PlacesResource
 from .resources.bed_type_resource import BedTypeResource
+from .resources.room_resource import RoomResource
 
 booking_app = Blueprint('booking_app', __name__)
 
@@ -21,3 +22,4 @@ api.add_resource(LoginApi, '/api/auth/login')
 api.add_resource(HotelResource, '/api/booking/hotels')
 api.add_resource(PlacesResource, '/api/booking/places', '/api/booking/places/<string:place_type>')
 api.add_resource(BedTypeResource, '/api/booking/bed-type')
+api.add_resource(RoomResource, '/api/booking/rooms')

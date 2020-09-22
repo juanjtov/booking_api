@@ -144,3 +144,29 @@ class BedType():
         self.created_at = created_at
         self.updated_at = updated_at
         self.active = active
+
+
+class Room():
+    def __init__(
+            self,
+            hotel_id,
+            room_number,
+            available,
+            price,
+            max_people,
+            description,
+            room_id=None,
+            created_at=None,
+            updated_at=None,
+            active=1):
+        self.room_id = room_id
+        self.hotel_id = hotel_id
+        self.room_number = room_number
+        self.available = available
+        self.price = price
+        self.max_people = max_people
+        self.description = description
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.active = active
+
